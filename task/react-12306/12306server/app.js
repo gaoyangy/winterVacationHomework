@@ -1,0 +1,18 @@
+var express = require('express')
+var login = require('./router/login')
+var train = require('./router/train')
+var signin = require('./router/signin')
+var record = require('./router/record')
+var insertrecord = require('./router/insertrecord')
+var removerecord = require('./router/removerecord')
+var app = express()
+app.use('/post', login)
+app.use('/train', train)
+app.use('/signin', signin)
+app.use('/record', record)
+app.use('/insertrecord', insertrecord)
+app.use('/removerecord', removerecord)
+
+app.listen(5000, function () {
+  console.log('Example app listening on port 5000!')
+})

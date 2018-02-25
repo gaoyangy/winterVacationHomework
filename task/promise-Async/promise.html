@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>promise回调</title>
+</head>
+<body>
+<script>
+//promise 是用来降低异步编程的复杂性
+
+/*  
+	Promise对象内部包含三种状态，分别为pending,fulfilled和rejected
+	pending（ 中间状态）正在等待处理完毕 单向不可逆的 —> fulfilled , rejected
+	fulfilled（最终态）—> 返回value 不可变
+	rejected（最终态） —> 返回reason 不可变
+*/
+
+//一个promise内部可以返回另一个promise，这样就可以进行层级调用。
+	
+
+	//创建一个Promise实例，获取数据。并把数据传递给处理函数resolve和reject。需要注意的是Promise在声明的时候就执行了。
+	var getData1=new Promise(function(resolve,reject){
+	    $.ajax({
+	        type:"get",
+	        url:"xxx",
+	        success:function(data){
+	            if(data.Status=="1"){
+	                resolve(data.ResultJson)//在异步操作成功时调用
+	            }else{
+	                reject(data.ErrMsg);//在异步操作失败时调用
+	            }
+	        }
+	    });
+	})
+
+
+	var getData2= new Promise(function(resolve,reject){
+	    $.ajax({
+	        type:"get",
+	        url:"xxx",
+	        success:function(data){
+	            if(data.Status=="1"){
+	                resolve(data.ResultJson)//在异步操作成功时调用
+	            }else{
+	                reject(data.ErrMsg);//在异步操作失败时调用
+	            }
+	        }
+	    });
+	})
+
+	var getData3=new Promise(function(resolve,reject){
+	    $.ajax({
+	        type:"get",
+	        url:"xxx",
+	        success:function(data){
+	            if(data.Status=="1"){
+	                resolve(data.ResultJson)//在异步操作成功时调用
+	            }else{
+	                reject(data.ErrMsg);//在异步操作失败时调用
+	            }
+	        }
+	    });
+	})
+
+	getData1.then(function(res){
+	　　return getData2(res)
+	}).then(function(res){
+	　　return getData3(res)
+	}).then(function(res){
+	　　console.log(res)
+	}).cache(function(error){
+	　　console.log(error)
+	})
+
+	//Promise的all方法，等数组中的所有promise对象都完成执行
+	Promise.all([getData1,getData2]).then(function([ResultJson1,ResultJson2]){
+	    //这两个ajax都成功返回数据才执行
+	　　getData3()
+	})
+</script>
+</body>
+</html>

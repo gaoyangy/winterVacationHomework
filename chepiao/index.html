@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <title>火车余票查询</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link type="text/css" href="./res/css/index.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="./res/css/jquery.autocomplete.css?201501210011" />
+    <script>
+        var BaseURL = 'http://www.chepiao100.com/';
+    </script>
+    <script type="text/javascript" src="./res/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="./res/js/jquery.datapick.js"></script>
+    <script type="text/javascript" src="./res/js/jquery.hotcity.js"></script>
+    <script type="text/javascript" src="./res/js/jquery.hotcode.js"></script>
+    <script type="text/javascript" src="./res/js/jquery.autocomplete.js"></script>
+    <script type="text/javascript" src="./res/js/jquery.tablesort.js"></script>
+    <script type="text/javascript" src="./res/js/common.js"></script>
+    <script type="text/javascript" src="./res/js/scrolltotop.js"></script>
+</head>
+
+<body>
+    <!-- head -->
+    <div class="main-in wrap">
+        <!-- start column -->
+        <div class="column">
+            <ul>
+                <li class="hon">
+                    <em class="bg yp"></em>
+                    <a href="">火车票查询</a>
+                </li>
+            </ul>
+        </div>
+        <!-- end column -->
+        <!-- start cont-form -->
+        <div class="cont-form">
+            <div class="bg change"></div>
+            <div class="loading"></div>
+            <div class="form_wp">
+                <form  method="post" id="sub_form" name="sub_form">
+                    <div class="form_ipt">
+                        <label>　出发站：</label>
+                        <input type="text" id="startStation" name="startStation" value="" class="station" />
+                        <em class="bg hotip" id="startStation_icon" src="startStation"></em>
+                    </div>
+                    <div class="form_ipt">
+                        <label>　到达站：</label>
+                        <input type="text" id="arriveStation" name="arriveStation" value="" class="station" />
+                        <em class="bg hotip" id="arriveStation_icon" src="arriveStation"></em>
+                    </div>
+                    <div class="form_ipt">
+                        <label>出发日期：</label>
+                        <input type="text" id="date" name="date" value="" />
+                        <em class="wktip" id="date_tip" src="date:date_tip:date_icon"></em>
+                        <em class="bg detip" id="date_icon" src="date"></em>
+                    </div>
+                    <div class="form_btn">
+                        <input type="button" class="sub" value=" 查询 " onClick="doRemain();">
+                        <input type="button" class="res" value=" 重置 " onClick="doRest();">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end cont-form -->
+    </div>
+    <div style="margin-right:auto; margin-left:auto; width:880px; background-color:#FFFFFF; text-align:center; padding-top:10px;">
+    </div>
+    <!-- start container -->
+    <div class="container wrap" id="container1">
+        <div class="con-init">
+            <h1>热门线路
+                <a href="" title="更多线路" class="more">>>更多</a>
+            </h1>
+            <div class="hotline">
+                <ul>
+                    <li>
+                        <a href="" title="北京到上海的列车">北京-上海</a>
+                    </li>
+                    <li>
+                        <a href="" title="北京到成都的列车">北京-成都</a>
+                    </li>
+                    <li>
+                        <a href="" title="北京到天津的列车">北京-天津</a>
+                    </li>
+                    <li>
+                        <a href="" title="蚌埠到上海的列车">蚌埠-上海</a>
+                    </li>
+                    <li>
+                        <a href="" title="合肥到上海的列车">合肥-上海</a>
+                    </li>
+                    <li>
+                        <a href="" title="济南到西安的列车">济南-西安</a>
+                    </li>
+                    <li>
+                        <a href="" title="上海到青岛的列车">上海-青岛</a>
+                    </li>
+                    <li>
+                        <a href="" title="深圳到南昌的列车">深圳-南昌</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="con-init">
+            <h1>热门汽车票
+                <a href="" title="更多汽车票" class="more">>>更多</a>
+            </h1>
+            <div class="hotline">
+                <ul>
+                    <li>
+                        <a href="" title="广州到湛江的汽车">广州-湛江</a>
+                    </li>
+                    <li>
+                        <a href="" title="哈尔滨到杭州的汽车">哈尔滨-杭州</a>
+                    </li>
+                    <li>
+                        <a href="" title="邯郸到武昌的汽车">邯郸-武昌</a>
+                    </li>
+                    <li>
+                        <a href="" title="杭州到九江的汽车">杭州-九江</a>
+                    </li>
+                    <li>
+                        <a href="" title="淮北到上海的汽车">淮北-上海</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="con-init">
+            <h1>热门车站
+                <a href="" title="更多车站" class="more">>>更多</a>
+            </h1>
+            <div class="hotline hotline1">
+                <ul>
+                    <li>
+                        <a href="" title="北京火车站">北京</a>
+                    </li>
+                    <li>
+                        <a href="" title="上海火车站">上海</a>
+                    </li>
+                    <li>
+                        <a href="" title="成都火车站">成都</a>
+                    </li>
+                    <li>
+                        <a href="" title="天津火车站">天津</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="con-init">
+            <h1>热门车次
+                <a href="" title="更多车次" class="more">>>更多</a>
+            </h1>
+            <div class="hotline hotline1">
+                <ul>
+                    <li>
+                        <a href="" title="D321次列车">D321</a>
+                    </li>
+                    <li>
+                        <a href="" title="K181次列车">K181</a>
+                    </li>
+                    <li>
+                        <a href="" title="K586次列车">K586</a>
+                    </li>
+                    <li>
+                        <a href="" title="T7次列车">T7</a>
+                    </li>
+                    <li>
+                        <a href="" title="T201次列车">T201</a>
+                    </li>
+                    <li>
+                        <a href="" title="D29次列车">D29</a>
+                    </li>
+                    <li>
+                        <a href="" title="K2288次列车">K2288</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container wrap" style="display: none;">
+
+        <!-- start date -->
+        <div class="cont-date">
+            <ul class="bg">
+                <li class="start">
+                    <em class="bg">
+                        <a href="http://www.chepiao100.com/yupiao/%E5%A4%A9%E6%B4%A5,%E9%87%8D%E5%BA%86,2018-02-24.html"></a>
+                    </em>
+                </li>
+                <li class="">
+                    <a href="http://www.chepiao100.com/yupiao/%E5%A4%A9%E6%B4%A5,%E9%87%8D%E5%BA%86,2018-02-24.html">02-24 周六</a>
+                </li>
+                <li class="hon">
+                    <a href="http://www.chepiao100.com/yupiao/%E5%A4%A9%E6%B4%A5,%E9%87%8D%E5%BA%86,2018-02-25.html">02-25 周日</a>
+                </li>
+                <li class="">
+                    <a href="http://www.chepiao100.com/yupiao/%E5%A4%A9%E6%B4%A5,%E9%87%8D%E5%BA%86,2018-02-26.html">02-26 周一</a>
+                </li>
+                <li class="">
+                    <a href="http://www.chepiao100.com/yupiao/%E5%A4%A9%E6%B4%A5,%E9%87%8D%E5%BA%86,2018-02-27.html">02-27 周二</a>
+                </li>
+                <li class="">
+                    <a href="http://www.chepiao100.com/yupiao/%E5%A4%A9%E6%B4%A5,%E9%87%8D%E5%BA%86,2018-02-28.html">02-28 周三</a>
+                </li>
+                <li class="">
+                    <a href="http://www.chepiao100.com/yupiao/%E5%A4%A9%E6%B4%A5,%E9%87%8D%E5%BA%86,2018-03-01.html">03-01 周四</a>
+                </li>
+                <li class="">
+                    <a href="http://www.chepiao100.com/yupiao/%E5%A4%A9%E6%B4%A5,%E9%87%8D%E5%BA%86,2018-03-02.html">03-02 周五</a>
+                </li>
+                <li class="end">
+                    <em class="bg">
+                        <a href="http://www.chepiao100.com/yupiao/%E5%A4%A9%E6%B4%A5,%E9%87%8D%E5%BA%86,2018-02-26.html"></a>
+                    </em>
+                </li>
+            </ul>
+        </div>
+        <!-- end date -->
+
+        <!-- content query -->
+
+        <div id="tableSort" class="tableSort">
+
+            <div class="conbar" box="conbar">
+                <ul>
+                    <li class="clean">清空选项</li>
+                    <li class="more more2">更多筛选条件</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <h1>天津 → 重庆</h1>
+                <span class="note">列车时刻表</span>
+                <span class="total">共3次车</span>
+            </div>
+
+            <div class="select" box="select">
+                <ul>
+                    <li>
+                        <label class="name">车型选择:</label>
+                        <label name="trainGrade" class="all">全部</label>
+                        <label>
+                            <input type="checkbox" name="trainGrade" value="==高速动车">G-高速</label>
+                        <label>
+                            <input type="checkbox" name="trainGrade" value="==城际高速">C-城际</label>
+                        <label>
+                            <input type="checkbox" name="trainGrade" value="==动车组">D-动车组</label>
+                        <label>
+                            <input type="checkbox" name="trainGrade" value="==直达特快">Z-直达</label>
+                        <label>
+                            <input type="checkbox" name="trainGrade" value="==空调特快">T-特快</label>
+                        <label>
+                            <input type="checkbox" name="trainGrade" value="==空调快速">K-快速</label>
+                        <label>
+                            <input type="checkbox" name="trainGrade" value="==普快">普快</label>
+                        <label>
+                            <input type="checkbox" name="trainGrade" value="==临客">L-临客</label>
+                    </li>
+                    <li>
+                        <label class="name">发车时间:</label>
+                        <label name="startTime" class="all">全部</label>
+                        <label>
+                            <input type="checkbox" name="startTime" value=">=06:00&amp;&amp;<=12:00">上午(06:00-12:00)</label>
+                        <label>
+                            <input type="checkbox" name="startTime" value=">=12:00&amp;&amp;<=18:00">下午(12:00-18:00)</label>
+                        <label>
+                            <input type="checkbox" name="startTime" value=">=18:00&amp;&amp;<=24:00">晚上(18:00-24:00)</label>
+                    </li>
+                    <li class="hide">
+                        <label class="name">车票选择:</label>
+                        <label name="seatType" class="all">全部</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>商务座">商务座</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>特等座">特等座</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>一等座">一等座</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>二等座">二等座</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>高级软卧">高级软卧</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>软卧">软卧</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>硬卧">硬卧</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>软座">软座</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>硬座">硬座</label>
+                        <label>
+                            <input type="checkbox" name="seatType" value="<>无座">无座</label>
+                    </li>
+                    <li class="hide">
+                        <label class="name">到站类型:</label>
+                        <label name="startType" class="all">全部</label>
+                        <label>
+                            <input type="checkbox" name="startType" value="==zhong">终到</label>
+                        <label>
+                            <input type="checkbox" name="startType" value="==guo">过路</label>
+                    </li>
+                    <li class="hide">
+                        <label class="name">到站时间:</label>
+                        <label name="endTime" class="all">全部</label>
+                        <label>
+                            <input type="checkbox" name="endTime" value=">=06:00&amp;&amp;<=12:00">上午(06:00-12:00)</label>
+                        <label>
+                            <input type="checkbox" name="endTime" value=">=12:00&amp;&amp;<=18:00">下午(12:00-18:00)</label>
+                        <label>
+                            <input type="checkbox" name="endTime" value=">=18:00&amp;&amp;<=24:00">晚上(18:00-24:00)</label>
+                    </li>
+                    <li class="hide">
+                        <label class="name">发站选择:</label>
+                        <label name="startStation" class="all">全部</label>
+                        <label>
+                            <input type="checkbox" name="startStation" value="==天津">天津</label>
+                        <label>
+                            <input type="checkbox" name="startStation" value="==天津西">天津西</label>
+                    </li>
+                    <li class="hide">
+                        <label class="name">到站选择:</label>
+                        <label name="arriveStation" class="all">全部</label>
+                        <label>
+                            <input type="checkbox" name="arriveStation" value="==重庆北">重庆北</label>
+                        <label>
+                            <input type="checkbox" name="arriveStation" value="==重庆西">重庆西</label>
+                        <label>
+                            <input type="checkbox" name="arriveStation" value="==重庆">重庆</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="head" box="head">
+                <div class="feedback" onclick="doFeedback(this)">错误反馈</div>
+                <ul>
+                    <li>
+                        <div class="code_wp">
+                            <span sort="trainCode" class="head_sort">车次</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="sta_wp">发站/到站</div>
+                    </li>
+                    <li>
+                        <div class="time_wp_s">
+                            <span sort="startTime" class="head_sort head_asc">发时</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="time_wp_s">
+                            <span sort="endTime" class="head_sort">到时</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="time_wp_t">运行时间</div>
+                    </li>
+                    <li>
+                        <div class="pri_wp">参考票价</div>
+                    </li>
+                    <li>
+                        <div class="rem_wp">参考余票</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="items" box="items">
+                <ul>
+                    <li box="item">
+                        <div class="list code_wp_1">
+                            <div>
+                                <b class="code ac_input" sort="trainCode" autocomplete="off">
+                                    <a href="http://www.chepiao100.com/checi/K1062,2018-02-25.html" title="K1062次列车">K1062</a>
+                                </b>
+                            </div>
+                            <b class="grade" sort="trainGrade">快速</b>
+                        </div>
+                        <div class="list code_wp_2">
+                            <div class="more" code="K1062">详细</div>
+                        </div>
+                        <div class="list sta_wp">
+                            <div sort="startStation">
+                                <i class="bg guo"></i>
+                                <a href="http://www.chepiao100.com/chezhan/%E5%A4%A9%E6%B4%A5,2018-02-25.html" title="天津火车站">天津</a>
+                            </div>
+                            <div sort="arriveStation">
+                                <i class="bg zhong"></i>
+                                <a href="http://www.chepiao100.com/chezhan/%E9%87%8D%E5%BA%86,2018-02-25.html" title="重庆火车站">重庆</a>
+                            </div>
+                            <div class="hide" sort="startType">zhong</div>
+                        </div>
+
+                        <div class="list time_wp">
+                            <div class="start" sort="startTime">08:49</div>
+                            <div class="arrive" sort="endTime">16:41</div>
+                        </div>
+
+                        <div class="list time_wp_t">
+                            <div>1天7小时52分</div>
+                            <div>当日</div>
+                        </div>
+
+                        <div class="list pri_wp" sort="seatType">
+                            <div>无　座：¥251</div>
+                        </div>
+
+                        <div class="list rem_wp">
+                            <div class="org">
+                                <i class="bg yu"></i>100张</div>
+                        </div>
+                        <div class="order">
+                            <a href="http://www.chepiao100.com/yuding/天津,重庆,K1062,2018-02-25.html" target="_blank">在线预定</a>
+                        </div>
+                    </li>
+                    <li box="item">
+                        <div class="list code_wp_1">
+                            <div>
+                                <b class="code ac_input" sort="trainCode" autocomplete="off">
+                                    <a href="http://www.chepiao100.com/checi/G1709,2018-02-25.html" title="G1709次列车">G1709</a>
+                                </b>
+                            </div>
+                            <b class="grade" sort="trainGrade">高速动车</b>
+                        </div>
+                        <div class="list code_wp_2">
+                            <div class="more" code="G1709">详细</div>
+                        </div>
+                        <div class="list sta_wp">
+                            <div sort="startStation">
+                                <i class="bg shi"></i>
+                                <a href="http://www.chepiao100.com/chezhan/%E5%A4%A9%E6%B4%A5%E8%A5%BF,2018-02-25.html" title="天津西火车站">天津西</a>
+                            </div>
+                            <div sort="arriveStation">
+                                <i class="bg zhong"></i>
+                                <a href="http://www.chepiao100.com/chezhan/%E9%87%8D%E5%BA%86%E8%A5%BF,2018-02-25.html" title="重庆西火车站">重庆西</a>
+                            </div>
+                            <div class="hide" sort="startType">zhong</div>
+                        </div>
+
+                        <div class="list time_wp">
+                            <div class="start" sort="startTime">08:05</div>
+                            <div class="arrive" sort="endTime">19:54</div>
+                        </div>
+
+                        <div class="list time_wp_t">
+                            <div>11小时49分</div>
+                            <div>当日</div>
+                        </div>
+
+                        <div class="list pri_wp" sort="seatType">
+                            <div>一等座：¥1462.5</div>
+                            <div>二等座：¥929</div>
+                            <div>商务座: ¥2820.5</div>
+                        </div>
+
+                        <div class="list rem_wp">
+                            <div class="org">
+                                <i class="bg yu"></i>5张</div>
+                            <div class="org">
+                                <i class="bg yu"></i>100张</div>
+                            <div class="org">
+                                <i class="bg yu"></i>100张</div>
+                        </div>
+                        <div class="order">
+                            <a href="http://www.chepiao100.com/yuding/天津西,重庆西,G1709,2018-02-25.html" target="_blank">在线预定</a>
+                        </div>
+                    </li>
+                    <li box="item">
+                        <div class="list code_wp_1">
+                            <div>
+                                <b class="code ac_input" sort="trainCode" autocomplete="off">
+                                    <a href="http://www.chepiao100.com/checi/K1572,2018-02-25.html" title="K1572次列车">K1572</a>
+                                </b>
+                            </div>
+                            <b class="grade" sort="trainGrade">快速</b>
+                        </div>
+                        <div class="list code_wp_2">
+                            <div class="more" code="K1572">详细</div>
+                        </div>
+                        <div class="list sta_wp">
+                            <div sort="startStation">
+                                <i class="bg guo"></i>
+                                <a href="http://www.chepiao100.com/chezhan/%E5%A4%A9%E6%B4%A5,2018-02-25.html" title="天津火车站">天津</a>
+                            </div>
+                            <div sort="arriveStation">
+                                <i class="bg zhong"></i>
+                                <a href="http://www.chepiao100.com/chezhan/%E9%87%8D%E5%BA%86%E5%8C%97,2018-02-25.html" title="重庆北火车站">重庆北</a>
+                            </div>
+                            <div class="hide" sort="startType">zhong</div>
+                        </div>
+
+                        <div class="list time_wp">
+                            <div class="start" sort="startTime">01:45</div>
+                            <div class="arrive" sort="endTime">07:25</div>
+                        </div>
+
+                        <div class="list time_wp_t">
+                            <div>1天5小时40分</div>
+                            <div>当日</div>
+                        </div>
+
+                        <div class="list pri_wp" sort="seatType">
+                            <div>无　座：¥240</div>
+                        </div>
+
+                        <div class="list rem_wp">
+                            <div class="org">
+                                <i class="bg yu"></i>100张</div>
+                        </div>
+                        <div class="order">
+                            <a href="http://www.chepiao100.com/yuding/天津,重庆北,K1572,2018-02-25.html" target="_blank">在线预定</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tip">因列车时刻经常变化，列车时刻表数据仅供参考</div>
+            <div class="head fixed" box="fixed" style="display: none;">
+                <div class="feedback" onclick="doFeedback(this)">错误反馈</div>
+                <ul>
+                    <li>
+                        <div class="code_wp">
+                            <span sort="trainCode">车次</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="sta_wp">发站/到站</div>
+                    </li>
+                    <li>
+                        <div class="time_wp_s">
+                            <span sort="startTime">发时</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="time_wp_s">
+                            <span sort="endTime">到时</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="time_wp_t">运行时间</div>
+                    </li>
+                    <li>
+                        <div class="pri_wp">参考票价</div>
+                    </li>
+                    <li>
+                        <div class="rem_wp">参考余票</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!-- end  container -->
+    <!-- start footer -->
+    <div class="clearboth"></div>
+    <div style="margin-right:auto; margin-left:auto; width:881px;">
+    </div>
+
+    <!-- end footer -->
+</body>
+
+</html>
